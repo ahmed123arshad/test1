@@ -8,6 +8,7 @@ import { isNgTemplate } from '@angular/compiler';
 })
 export class AppComponent implements OnInit{
   //1.Make a new array of objects called productNamePrice from the products array; it should contain only productName and productPrice
+  disItemPrice:any;;
   products = [
     {
       productName: "Stamps and Flowers - Amethyst",
@@ -227,7 +228,7 @@ export class AppComponent implements OnInit{
     this.leastPriceWithThisName("Stamps and Flower - Sage");
     this.totalItemsInCart();
     this.minAndMaxValue();
-    this.totalPriceOfCart();
+    this.totalPriceOfCart("5A9FFA2C-5D9D-4A1E-88CF-40AA3384D6FC",10);
   }
 
   //2.You'll notice that some products have the same name, make a function called leastPriceWithThisName which will take one parameter (name). It should return the product with least price which has the parameter name passed to the function
@@ -256,9 +257,20 @@ export class AppComponent implements OnInit{
  }
 
  //5.Calculate the total price of the cart, keep in mind any discounts applied to a cart item. Note:
-  totalPriceOfCart(){
+  totalPriceOfCart(Id,percentage){ //let suppose we’re passing the percentage and id of that cart item that we want to give a discount
+  
   let totalPrice = this.cart.reduce(function (cart, obj) { return cart + obj.price; }, 0); 
+  
+  if(Id != null && percentage != null){
+    this.disItemPrice = this.cart.filter(item => item.id === Id).map(i => i.price/100*percentage)
+    let disPrice = totalPrice - this.disItemPrice
+    console.log(disPrice)
+  }
+ 
+  else{
   console.log(totalPrice);
+ }
+  
  }
 
 }
